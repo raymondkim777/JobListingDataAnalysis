@@ -17,7 +17,9 @@ The data set was obtained from Kaggle (https://www.kaggle.com/datasets/shivamb/r
 
 The data set contains significantly more legitimate listings than fraudulent ones, with 14473 and 711 respectively. Thus, an equal number of each (`n=700`) are randomly sampled each time the code is run. The sampled dataframe is shown below.
 
-[INCLUDE SCREENSHOT]
+<p align="center">
+ <img src='images/sample_df.png' width=900px/>
+</p>
 
 ### Logistic Regression Model
 
@@ -32,20 +34,25 @@ $$S_{c_1, c_2} = \sqrt{\sum (sim(w_a, w_b))^2} \qquad (\forall w_a \in c_1, w_b 
 The correlation value between two words $sim(w_1, w_2)$ will be computed with the KeyedVectors class in the gensim module included with Colab, using the vector space model "word2vec-google-news-300" provided by Google. (Details about the model can be found [here](https://code.google.com/archive/p/word2vec/).)
 
 The final computed similarity scores are shown below. Here, `rel_sim_score1` refers to (title/desc), and `rel_sim_score2` refers to (desc/req).
-
-[INCLUDE SCREENSHOT]
+<p align="center">
+ <img src='images/sim_scores.png' width=350px/>
+</p>
 
 #### LR Model Results
 
 Two logistic regression models were generated. The first model was trained with the two similarity scores as independent variables and the `fradulent` data as dependent variables. 80% of the data was used for training and 20% for testing, and the results are shown below as a scatterplot using `matplotlib`.
 
-[INCLUDE SCREENSHOT]
+<p align="center">
+ <img src='images/lr_1.png' width=450px/>
+</p>
 
 As is evident, the data is a mess; the distribution of data is not clearly distinguishable with the given independent variables. This results in a subsatisfactory model accuracy of 47.8%.
 
 From the plot, it seemed as if using the two similarity scores yielded intermixed data points. Thus, a second model was trained using one of the similarity scores and `profile_yn`; for the former, `rel_sim_score2` was used as contextually it contained more relevant information, and the latter due to the initial human observation noted above. The results are shown below.
 
-[INCLUDE SCREENSHOT]
+<p align="center">
+ <img src='images/lr_2.png' width=450px/>
+</p>
 
 Although this model yielded an accuracy of 69.6%, the scatterplot indicates this value is misleading, as the data was only distinguished by `profile_yn`, with `rel_sim_score2` serving no practical purpose. Thus, both models did not produce satisfactory results, and thus another method of data analysis was required.
 
@@ -55,7 +62,9 @@ The previous logistic regresison model indicated `profile_yn` to be a key decidi
 
 #### DT Model Results
 
-[INCLUDE SCREENSHOT]
+<p align="center">
+ <img src='images/dt.png' width=800px/>
+</p>
 
 The above results showcase a final accuracy of 70%, the highest score for various depth levels. This is admittedly a disappointing score; however, an intersting note is that the majority of the accuracy is once again determined by `profile_yn`, which became evident at `max_depth=1`, producing an accuracy of 65%. This indicated a potential method of first using a 1-depth decision tree to divide the data with `profile_yn`, then applying logistic regression to each branch.
 
@@ -65,13 +74,17 @@ A similar process to training the previous logistic regression models was utiliz
 
 #### Model Results - Companies with Profiles (`profile_yn = 1`)
 
-[INCLUDE SCREENSHOT]
+<p align="center">
+ <img src='images/dtlr_1.png' width=450px/>
+</p>
 
 Although the results present a 69.82% accuracy, this is meaningless as the logistic regression model failed to meaningfully divide the data; all points are on the same side of the drawn division line. The branch `profile_yn <= 0.5` shows similar results. 
 
 #### Model Results - Companies without Profiles (`profile_yn = 0`)
 
-[INCLUDE SCREENSHOT]
+<p align="center">
+ <img src='images/dtlr_2.png' width=450px/>
+</p>
 
 As evident, decision trees nor logistic regression seems to be able to meaningfully discern between legitimate and fraudulent job listings. Thus, we opted to take some time to think of different machine learning methods (besides the most basic ones) that would be able to succeed. 
 
@@ -114,7 +127,9 @@ A TensorFlow Keras sequential model was generated with three layers. The first e
 
 Multiple iterations of fitting the model yielded a general accuracy of 85%, with the displayed results showing a 86.6% accuracy. 
 
-[INCLUDE SCREENSHOT]
+<p align="center">
+ <img src='images/nn.png' width=800px/>
+</p>
 
 The LSTM model shows significant improvements in meaningful discernment between legitimate and fraudulent job listings over other, more basic methods of data analysis. Although an accuracy of over 90% would be optimal, the current result is still satisfactory, especially considering the atrocious results of previous attempts with logistic regression and decision trees. Perhaps an altered version of LSTM more suited for formal speech, or a different type of RNN model altogether would yield better results. This is an idea for a separate exploration for some other time. 
 
