@@ -134,4 +134,4 @@ Multiple iterations of fitting the model yielded a general accuracy of 85%, with
 The LSTM model shows significant improvements in meaningful discernment between legitimate and fraudulent job listings over other, more basic methods of data analysis. Although an accuracy of over 90% would be optimal, the current result is still satisfactory, especially considering the atrocious results of previous attempts with logistic regression and decision trees. Perhaps an altered version of LSTM more suited for formal speech, or a different type of RNN model altogether would yield better results. This is an idea for a separate exploration for some other time. 
 
 ## Reference
-- Christopher D. Manning et al., 2008, Introduction to Information Retrieval (8th Edition)
+- (To be added later)
